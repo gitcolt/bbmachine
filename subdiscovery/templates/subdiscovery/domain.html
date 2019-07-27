@@ -1,0 +1,7 @@
+<h1>Subdomains found for {{ domain }} ({{ subdomains|length }})</h1>
+<a href="{% url 'subdiscovery:domain_delete' domain.pk %}">Delete</a>
+<ul>
+{% for subdomain in subdomains %}    
+<li>{{ subdomain }}</li>
+{% endfor %}
+</ul>

@@ -1,0 +1,13 @@
+<h1>Domains:</h1>
+{% if domains %}    
+    <ul>
+    {% for domain in domains %}
+    <li><a href="{% url 'subdiscovery:domain' domain.id %}">{{domain}}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+<a href='/subdiscovery/add_domain'>Add domain</button>
+</br>
+</br>
+<a href="{% url 'subdiscovery:find_subdomains' %}">Find subdomains</a>
