@@ -1,13 +1,29 @@
 version: '3'
 
 services:
-    app:
+    web:
         build: .
-        image: cobaltcaboose/bbmachine:1.0
+        image: app-image
         ports:
             - 80:8000
         volumes:
             - .:/app
-    cron:
-        build: ./cron
-
+        command: gunicorn -b 0.0.0.0:8000 bbmachine.wsgi
+    redis:
+        image: redis:alpine
+        ports:
+            - 6379:6379
+    celery_worker:
+        working_dir: /app
+        command: sh -c './wait-for redis:6379 && ./wait-for web:8000 -- celery -A bbmachine worker -l info'
+        image: app-image
+        depends_on:
+            - web
+            - redis
+        volumes:
+            - .:/app
+    celery_beat:
+        working_dir: /app
+        command: sh -c 'celery -A bbmachine beat -l info'
+        image: app-image
+        

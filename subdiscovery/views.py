@@ -8,7 +8,8 @@ from .models import Domain, Subdomain
 from utils import send_slack_notification
 import requests
 import subprocess
-from . import find_subdomains
+#from . import find_subdomains
+from subdiscovery.tasks import find_subdomains
 
 import os
 
@@ -18,7 +19,7 @@ class IndexView(generic.ListView):
     context_object_name = 'domains'
 
 def find_subdomains_view(request):
-    find_subdomains();
+    find_subdomains.delay();
     return redirect('subdiscovery:index')
 
 class DomainView(View):

@@ -9,10 +9,10 @@ https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/
 
 import os
 
-import dotenv
 from django.core.wsgi import get_wsgi_application
+from dotenv import load_dotenv
 
-dotenv.read_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
+load_dotenv()
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'bbmachine.settings')
 

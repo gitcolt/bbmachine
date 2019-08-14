@@ -5,9 +5,10 @@ RUN apk --no-cache add  python3 \
                         go \
                         musl-dev
 
-RUN pip3 install    django \
-                    django-dotenv \
-                    gunicorn
+#RUN pip3 install    django \
+#                    django-dotenv \
+#                    gunicorn
+RUN pip3 install gunicorn
 
 RUN mkdir /home/go
 
@@ -24,5 +25,6 @@ RUN pip3 install -r requirements.txt
 
 RUN python3 manage.py migrate
 
-ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8000", "bbmachine.wsgi"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "bbmachine.wsgi"]
+#ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8000", "bbmachine.wsgi"]
 
