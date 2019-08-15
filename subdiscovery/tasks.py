@@ -13,9 +13,12 @@ def find_subdomains():
         args = ['assetfinder', '--subs-only', domain.name]
         subdomains_found = (subprocess.run(args, check=True, stdout=subprocess.PIPE) \
                 .stdout.decode().split('\n'))
+
+        # Remove empty strings
         subdomains_found = filter(None, subdomains_found)
 
         subdomains_existing = Subdomain.objects.filter(domain=domain).values('name')
+
         is_first_run = True if len(subdomains_existing) == 0 else False
         not_in_db = set(subdomains_found) - set(sub['name'] for sub in subdomains_existing)
 
